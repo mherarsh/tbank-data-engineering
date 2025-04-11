@@ -1,0 +1,34 @@
+version: '3.8'
+name: postgres
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=myuser         # Пользователь БД
+      - POSTGRES_PASSWORD=mypassword  # Пароль
+      - POSTGRES_DB=mydatabase        # Имя базы данных
+      - POSTGRES_HOST_AUTH_METHOD=trust  # Разрешить локальные подключения без пароля (только для тестов!)
+    ports:
+      - "5432:5432"                   # Проброс портов: хост:контейнер
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  
+  init_user_postgres:
+    image: postgres:15-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    command: >
+      bash -c "PGPASSWORD=postgres psql -h postgres -U myuser -d mydatabase -c 'ALTER ROLE myuser SUPERUSER'"
+
+volumes:
+  postgres_data:   
