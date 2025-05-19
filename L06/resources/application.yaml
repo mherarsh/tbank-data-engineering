@@ -1,0 +1,11 @@
+server.port: 8888
+
+spring:
+  application:
+    name: db_connector
+  datasource:
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+    validation-query: SELECT 1
+    url: jdbc:postgresql://localhost:5432/mydatabase
