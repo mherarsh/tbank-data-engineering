@@ -4,12 +4,12 @@
 version: '3.8'
 
 services:
-  cassandra1:
+  cassandra_db:
     image: cassandra:latest
-    container_name: cassandra1
-    hostname: cassandra1
+    container_name: cassandra_db
+    hostname: cassandra_db
     environment:
-      - SEEDS=cassandra1
+      - SEEDS=cassandra_db
       - START_RPC=false
       - CLUSTER_NAME=dse51_cluster
       - DC=DC1
@@ -19,13 +19,9 @@ services:
       - HEAP_NEWSIZE=200M
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
     expose:
-      - 7000
-      - 7001
-      - 7199
       - 9042
-      - 9142
     ports:
-      - "9043:9042"
+      - "9042:9042"
     ulimits:
       memlock: -1
       nproc: 32768
@@ -40,11 +36,11 @@ networks:
 
 Проверяем, что нода успешно запустилась
 
-``docker exec -it cassandra1 nodetool status``
+``docker exec -it cassandra_db nodetool status``
 
 Подключаемс к контейнеру 
 
-``docker exec -it cassandra1 cqlsh``
+``docker exec -it cassandra_db cqlsh``
 
 ## Создаём KeySpace
 
@@ -68,7 +64,7 @@ CREATE TABLE iot_data.sensor_readings (
   temperature DOUBLE, -- температура
   humidity DOUBLE, -- влажность
   status TEXT, -- состояние сенсора на момент снятия показания ('OK', 'WARN', 'ERROR')
-  PRIMARY KEY ((device_id), sensor_type, reading_time)
+  PRIMARY KEY ((device_id), device_type, reading_time)
 );
 ```
 Обращаем внимание на **PRIMARY KEY** 
