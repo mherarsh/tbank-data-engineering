@@ -4,10 +4,10 @@
 version: '3.8'
 
 services:
-  cassandra_db:
+  cassandra1:
     image: cassandra:latest
-    container_name: cassandra_db
-    hostname: cassandra_db
+    container_name: cassandra1
+    hostname: cassandra1
     environment:
       - SEEDS=cassandra1
       - START_RPC=false
