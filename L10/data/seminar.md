@@ -9,7 +9,7 @@ services:
     container_name: cassandra_db
     hostname: cassandra_db
     environment:
-      - SEEDS=cassandra_db
+      - SEEDS=cassandra1
       - START_RPC=false
       - CLUSTER_NAME=dse51_cluster
       - DC=DC1
@@ -40,11 +40,11 @@ networks:
 
 Проверяем, что нода успешно запустилась
 
-``docker exec -it cassandra_db nodetool status``
+``docker exec -it cassandra1 nodetool status``
 
 Подключаемс к контейнеру 
 
-``docker exec -it cassandra_db cqlsh``
+``docker exec -it cassandra1 cqlsh``
 
 ## Создаём KeySpace
 
