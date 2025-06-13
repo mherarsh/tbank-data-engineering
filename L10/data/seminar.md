@@ -19,9 +19,13 @@ services:
       - HEAP_NEWSIZE=200M
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
     expose:
+      - 7000
+      - 7001
+      - 7199
       - 9042
+      - 9142
     ports:
-      - "9042:9042"
+      - "9043:9042"
     ulimits:
       memlock: -1
       nproc: 32768
@@ -64,7 +68,7 @@ CREATE TABLE iot_data.sensor_readings (
   temperature DOUBLE, -- температура
   humidity DOUBLE, -- влажность
   status TEXT, -- состояние сенсора на момент снятия показания ('OK', 'WARN', 'ERROR')
-  PRIMARY KEY ((device_id), device_type, reading_time)
+  PRIMARY KEY ((device_id), sensor_type, reading_time)
 );
 ```
 Обращаем внимание на **PRIMARY KEY** 
