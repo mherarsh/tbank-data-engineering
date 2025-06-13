@@ -68,7 +68,7 @@ CREATE TABLE iot_data.sensor_readings (
   temperature DOUBLE, -- температура
   humidity DOUBLE, -- влажность
   status TEXT, -- состояние сенсора на момент снятия показания ('OK', 'WARN', 'ERROR')
-  PRIMARY KEY ((device_id), sensor_type, reading_time)
+  PRIMARY KEY ((device_id), device_type, reading_time)
 );
 ```
 Обращаем внимание на **PRIMARY KEY** 
